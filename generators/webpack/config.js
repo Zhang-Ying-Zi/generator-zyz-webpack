@@ -11,7 +11,6 @@ module.exports = {
       type: "confirm",
       name: "vue",
       message: "需要编译vue么？",
-      store: true,
     },
   ],
   filesToCopy: [

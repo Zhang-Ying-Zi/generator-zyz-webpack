@@ -5,6 +5,8 @@ const mkdirp = require("mkdirp");
 const path = require("path");
 const _ = require("lodash");
 
+let templateData = {};
+
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
@@ -15,18 +17,33 @@ module.exports = class extends Generator {
   }
 
   prompting() {
-    return this.prompt(config.prompts).then((answers) => {
-      this.answers = answers;
-    });
+    let prompts = [];
+    for (let prompt of config.prompts) {
+      if (this.options.hasOwnProperty(prompt.name)) {
+        templateData[prompt.name] = this.options[prompt.name];
+      } else {
+        prompts.push(prompt);
+      }
+    }
+
+    return prompts.length
+      ? this.prompt(prompts).then((answers) => {
+          for (let answerName in answers) {
+            templateData[answerName] = answers[answerName];
+          }
+        })
+      : null;
   }
 
   writing() {
+    for (let key in templateData) {
+      this.config.set(key, templateData[key]);
+    }
     let yoJSON = this.fs.readJSON(".yo-rc.json");
-    const templateData = {
-      typescript: yoJSON["generator-zyz-babel"].promptValues.typescript,
-      react: yoJSON["generator-zyz-babel"].promptValues.react,
-      vue: this.answers.vue,
-    };
+    templateData = Object.assign(templateData, {
+      typescript: yoJSON["generator-zyz-babel"].typescript,
+      react: yoJSON["generator-zyz-babel"].react,
+    });
     // from github
     const copy = (input, output) => {
       this.fs.copy(input, this.destinationPath(output));
@@ -64,7 +81,7 @@ module.exports = class extends Generator {
     });
 
     // Get Remote Templates
-    var done = this.async();
+    let done = this.async();
     remote(
       "Zhang-Ying-Zi",
       "generator-zyz-webpack-source",
