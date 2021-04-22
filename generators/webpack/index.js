@@ -40,10 +40,19 @@ module.exports = class extends Generator {
       this.config.set(key, templateData[key]);
     }
     let yoJSON = this.fs.readJSON(".yo-rc.json");
-    templateData = Object.assign(templateData, {
-      typescript: yoJSON["generator-zyz-babel"].typescript,
-      react: yoJSON["generator-zyz-babel"].react,
-    });
+    let configData = {
+      typescript: false,
+      react: false,
+      vue: false,
+    };
+    for (let otherYoConfigKey in yoJSON) {
+      for (let configKey in configData) {
+        if (yoJSON[otherYoConfigKey].hasOwnProperty(configKey)) {
+          configData[configKey] = yoJSON[otherYoConfigKey][configKey];
+        }
+      }
+    }
+    templateData = Object.assign(templateData, configData);
     // from github
     const copy = (input, output) => {
       this.fs.copy(input, this.destinationPath(output));
