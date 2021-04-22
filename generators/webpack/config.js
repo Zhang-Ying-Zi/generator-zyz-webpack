@@ -82,7 +82,6 @@ module.exports = {
           "mini-css-extract-plugin": "^1.4.1",
           postcss: "^8.2.9",
           "postcss-loader": "^5.2.0",
-          prettier: "^1.19.1",
           sass: "^1.32.8",
           "sass-loader": "^11.0.1",
           "script-loader": "^0.7.2",
