@@ -8,8 +8,8 @@ module.exports = class extends Generator {
   initializing() {
     this.composeWith("zyz-init", {});
     this.composeWith("zyz-babel:babel", {});
-    this.composeWith("zyz-webpack:webpack", {});
     this.composeWith("zyz-eslint:eslint", {});
+    this.composeWith("zyz-webpack:webpack", {});
   }
 
   prompting() {}

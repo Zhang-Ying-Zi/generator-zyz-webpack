@@ -9,6 +9,16 @@ module.exports = {
   prompts: [
     {
       type: "confirm",
+      name: "typescript",
+      message: "需要编译TypeScript么？",
+    },
+    {
+      type: "confirm",
+      name: "react",
+      message: "需要编译React么？",
+    },
+    {
+      type: "confirm",
       name: "vue",
       message: "需要编译vue么？",
     },
