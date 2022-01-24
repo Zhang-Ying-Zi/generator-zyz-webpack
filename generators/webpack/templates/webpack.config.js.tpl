@@ -38,7 +38,7 @@ const WebpackConfig = {
     path: OutputPathBase,
     filename: "[name].[contenthash:4].js", // [id] [name] [contenthash] [chunkhash] [hash]
     chunkFilename: "[name].[contenthash:4].[id].js",
-    assetModuleFilename: "assets/[name].[hash:4][ext][query]",
+    assetModuleFilename: "assets/[name][ext][query]",
     publicPath: "" // the url to the output directory resolved relative to the HTML page
   },
   module: {
@@ -64,7 +64,7 @@ const WebpackConfig = {
       filename: "index.html",
       template: path.join(EntryPathBase, "index.html"),
       favicon: path.join(EntryPathBase, "favicon.ico"),
-      hash: true,
+      hash: false,
       minify: {
         removeAttributeQuotes: true,
         removeComments: true,
